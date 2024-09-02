@@ -5,7 +5,8 @@ import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import AuthProvider from "@/Components/AuthProvider";
 import QueryProvider from "@/Components/QueryProvider";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -23,6 +24,11 @@ export default function RootLayout({ children }) {
             <Navbar />
             {children}
             <Footer />
+            <ToastContainer
+              position="bottom-right"
+              theme="dark"
+              autoClose={3000}
+            />
           </QueryProvider>
         </AuthProvider>
       </body>
