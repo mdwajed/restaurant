@@ -60,12 +60,6 @@ const OrdersPage = () => {
         </thead>
         <tbody>
           {data.map((item) => (
-            // <tr
-            //   className={`text-sm md:text-base ${
-            //     item.status === "delivered" ? "bg-gray-500" : "bg-red-50"
-            //   }`}
-            //   key={item.id}
-            // >
             <tr
               className={`text-sm md:text-base ${
                 (item.status || "").toLowerCase() === "delivered"
@@ -80,7 +74,7 @@ const OrdersPage = () => {
               </td>
               <td className="py-6 px-1">{item.price}</td>
               <td className="hidden md:block py-6 px-1">
-                {item.products[0].Title}
+                {item.products[0].title}
               </td>
               {session?.user.isAdmin ? (
                 <td>

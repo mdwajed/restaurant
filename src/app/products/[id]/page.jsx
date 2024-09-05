@@ -1,3 +1,4 @@
+import Delete from "@/Components/Delete";
 import Price from "@/Components/Price";
 import Image from "next/image";
 import React from "react";
@@ -15,7 +16,7 @@ const SingleProductPage = async ({ params }) => {
   const singleProduct = await getData(params.id);
   console.log(singleProduct);
   return (
-    <div className="h-screen p-4 lg:px-20 xl:px-40 flex flex-col md:items-center md:gap-8 justify-around md:flex-row text-red-600 ">
+    <div className="h-screen p-4 lg:px-20 xl:px-40 flex flex-col md:items-center md:gap-8 justify-around md:flex-row text-red-600 relative">
       {/* IMAGE */}
       {singleProduct.img && (
         <div className="flex-1 relative md:h-[70%]">
@@ -35,6 +36,7 @@ const SingleProductPage = async ({ params }) => {
         <p className="">{singleProduct.desc}</p>
         <Price product={singleProduct}/>
       </div>
+      <Delete id={singleProduct.id}/>
     </div>
   );
 };

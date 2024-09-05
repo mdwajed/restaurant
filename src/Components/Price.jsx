@@ -4,10 +4,14 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 const Price = ({ product }) => {
-  const { addToCart } = useCartStore();
   const [total, setTotal] = useState(product.price);
   const [selected, setSelected] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCartStore();
+
+  useEffect(() => {
+    useCartStore.persist.rehydrate();
+  }, []);
 
   useEffect(() => {
     if (product.options?.length) {
@@ -15,7 +19,15 @@ const Price = ({ product }) => {
         quantity * product.price + product.options[selected].additionalPrice
       );
     }
-  }, [product.options, product.price, quantity, selected]);
+  }, [quantity, product, selected]);
+  // useEffect(() => {
+  //   if (product.options?.length) {
+  //     const additionalPrice = product.options[selected]?.additionalPrice || 0;
+  //     setTotal(quantity * product.price + additionalPrice);
+  //   } else {
+  //     setTotal(quantity * product.price); // Fallback in case there are no options
+  //   }
+  // }, [quantity, product, selected]);
 
   const handleCart = () => {
     addToCart({
@@ -28,13 +40,13 @@ const Price = ({ product }) => {
       }),
       quantity: quantity,
     });
-    toast.success("Product added to the Cart")
+    toast.success("Product added to the Cart");
   };
 
   return (
     <div className="flex flex-col gap-4 md:gap-6 xl:gap-8">
-      <h1 className="text-2xl font-bold">$ {total}</h1>
-      {/* OPTION */}
+      <h1 className="text-2xl font-bold">$ {Number(total).toFixed(2)}</h1>
+      {/* OPTION ,*/}
       <div className="flex gap-2  md:gap-6 xl:gap-8">
         {product.options?.length &&
           product.options?.map((option, index) => (

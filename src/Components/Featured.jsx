@@ -6,7 +6,8 @@ const getData = async () => {
     cache: "no-store",
   });
   if (!res.ok) {
-    throw new Error("failed to fetch");
+    console.error(`Error: ${res.status} ${res.statusText}`);
+  throw new Error("failed to fetch");
   }
   return res.json();
 };

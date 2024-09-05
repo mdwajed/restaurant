@@ -1,9 +1,10 @@
 import { getAuthSession } from "@/Utils/auth";
 import prisma from "@/Utils/connect";
 import { NextResponse } from "next/server";
+
+// FETCH ALL ORDERS
 export const GET = async (req) => {
   const session = await getAuthSession();
-  console.log(session);
   if (session) {
     try {
       if (session.user.isAdmin) {
@@ -31,6 +32,28 @@ export const GET = async (req) => {
     );
   }
 };
-export const POST = () => {
-  return new NextResponse("Hello", { status: 200 });
+// CREATE ORDERS
+export const POST = async (req) => {
+  const session = await getAuthSession();
+  if (session) {
+    try {
+      const body = await req.json();
+
+      const order = await prisma.order.create({
+        data: body,
+      });
+      return new NextResponse(JSON.stringify(order), { status: 201 });
+    } catch (error) {
+      console.log(error);
+      return new NextResponse(
+        JSON.stringify({ message: "something went wrong" }),
+        { status: 500 }
+      );
+    }
+  } else {
+    return new NextResponse(
+      JSON.stringify({ message: "Checkout not successfull" }),
+      { status: 401 }
+    );
+  }
 };
